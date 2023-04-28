@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jacobgoldstonedemo1/project_theme/project_colors.dart';
 import 'package:jacobgoldstonedemo1/project_theme/project_texts.dart';
+import 'package:jacobgoldstonedemo1/screans/detail_page.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/category_button_widget.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/gridview_card_widget.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/large_text_widget.dart';
@@ -30,9 +31,10 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
 
   int currentIndex = 0;
 
-  void onTap(int index, int selectedIndex) {
+  void onTap(int index) {
     setState(() {
       currentIndex = index;
+      print(currentIndex);
     });
   }
 
@@ -73,7 +75,9 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.7),
               children: List.generate(25, (index) {
-                return GridViewCard();
+                return GridViewCard(onTab: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(),));
+                },);
               }))),
     );
   }
@@ -106,9 +110,7 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
 
   BottomNavigationBar _bottomNavigationBar() {
     return BottomNavigationBar(
-        onTap: (index) {
-          onTap(index, currentIndex);
-        },
+        onTap: onTap,
         elevation: 0,
         showSelectedLabels: false,
         showUnselectedLabels: false,
