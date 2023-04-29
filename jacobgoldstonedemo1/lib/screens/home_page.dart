@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jacobgoldstonedemo1/project_theme/project_colors.dart';
 import 'package:jacobgoldstonedemo1/project_theme/project_texts.dart';
-import 'package:jacobgoldstonedemo1/screans/detail_page.dart';
+import 'package:jacobgoldstonedemo1/screens/cart_page.dart';
+import 'package:jacobgoldstonedemo1/screens/detail_page.dart';
+import 'package:jacobgoldstonedemo1/screens/favourite_page.dart';
+import 'package:jacobgoldstonedemo1/screens/profile_page.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/category_button_widget.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/gridview_card_widget.dart';
 import 'package:jacobgoldstonedemo1/widgets/core/large_text_widget.dart';
@@ -13,7 +16,8 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
+class _HomePageState extends State<HomePage>
+    with ProjectTexts, ProjectColors, TickerProviderStateMixin {
   late List<String> categoryList = [
     "Et",
     "Tavuk",
@@ -27,22 +31,37 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 4, vsync: this);
   }
 
-  int currentIndex = 0;
+  int SelectedNavBar = 0;
 
   void onTap(int index) {
-    setState(() {
-      currentIndex = index;
-      print(currentIndex);
-    });
+    SelectedNavBar = index;
   }
 
+  late final TabController tabController;
   @override
   Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: 4,
+        child: Scaffold(
+            bottomNavigationBar: _bottomAppBar(),
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: [
+                _HomePage(context),
+                FavouritePage(),
+                CartPage(),
+                ProfilePage()
+              ],
+            )));
+  }
+
+  Scaffold _HomePage(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      bottomNavigationBar: _bottomNavigationBar(),
       backgroundColor: homePageGreenColor,
       appBar: _appbarWidget(),
       drawer: _drawerWidget(),
@@ -75,9 +94,13 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.7),
               children: List.generate(25, (index) {
-                return GridViewCard(onTab: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(),));
-                },);
+                return GridViewCard(
+                  onTab: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => DetailPage(),
+                    ));
+                  },
+                );
               }))),
     );
   }
@@ -118,7 +141,7 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
         unselectedFontSize: 0,
         type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.white,
-        currentIndex: currentIndex,
+        currentIndex: SelectedNavBar,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.grey.withOpacity(0.5),
         items: const [
@@ -129,6 +152,25 @@ class _HomePageState extends State<HomePage> with ProjectTexts, ProjectColors {
               icon: Icon(Icons.shopping_cart_rounded), label: "Cart"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
         ]);
+  }
+
+  BottomAppBar _bottomAppBar() {
+    return BottomAppBar(
+        elevation: 0,
+        color: Color.fromRGBO(232, 233, 239, 1),
+        surfaceTintColor: Colors.black,
+        child: TabBar(
+          controller: tabController,
+          tabs: const [
+            Tab(
+                child: Icon(
+              Icons.home_outlined,
+            )),
+            Tab(icon: Icon(Icons.favorite_border_rounded)),
+            Tab(icon: Icon(Icons.shopping_cart_outlined)),
+            Tab(icon: Icon(Icons.person_2_outlined)),
+          ],
+        ));
   }
 
   AppBar _appbarWidget() {
@@ -196,3 +238,5 @@ class _emptyWidget extends StatelessWidget {
     return const SizedBox(height: 10);
   }
 }
+
+enum PageNames { home, favourite, cart, profile }

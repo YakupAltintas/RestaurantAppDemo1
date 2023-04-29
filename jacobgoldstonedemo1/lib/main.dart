@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jacobgoldstonedemo1/screans/detail_page.dart';
-import 'package:jacobgoldstonedemo1/screans/home_page.dart';
-import 'Provider/provider_model.dart';
+import 'package:jacobgoldstonedemo1/screens/detail_page.dart';
+import 'package:jacobgoldstonedemo1/screens/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Uplabs demo1',
       theme: ThemeData(),
-      home: const HomePage(),
+      home:  HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
