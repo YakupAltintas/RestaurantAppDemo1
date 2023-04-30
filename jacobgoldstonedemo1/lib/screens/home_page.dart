@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:jacobgoldstonedemo1/project_theme/project_colors.dart';
-import 'package:jacobgoldstonedemo1/project_theme/project_texts.dart';
+import 'package:jacobgoldstonedemo1/core/project_theme/project_colors.dart';
+import 'package:jacobgoldstonedemo1/core/project_theme/project_texts.dart';
+import 'package:jacobgoldstonedemo1/core/widgets/medium_headline_text_widget.dart';
+import 'package:jacobgoldstonedemo1/core/widgets/small_headline_text_widget.dart';
 import 'package:jacobgoldstonedemo1/screens/cart_page.dart';
 import 'package:jacobgoldstonedemo1/screens/detail_page.dart';
 import 'package:jacobgoldstonedemo1/screens/favourite_page.dart';
 import 'package:jacobgoldstonedemo1/screens/profile_page.dart';
-import 'package:jacobgoldstonedemo1/widgets/core/category_button_widget.dart';
-import 'package:jacobgoldstonedemo1/widgets/core/gridview_card_widget.dart';
-import 'package:jacobgoldstonedemo1/widgets/core/large_text_widget.dart';
+import 'package:jacobgoldstonedemo1/core/widgets/category_button_widget.dart';
+import 'package:jacobgoldstonedemo1/core/widgets/gridview_items_widget.dart';
+import '../core/widgets/large_headline_text_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -69,13 +71,17 @@ class _HomePageState extends State<HomePage>
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const _emptyWidget(),
-          LargeText(text: "Favori Yemeğin Hangisi ?", size: 31),
+          LargeText(
+            text: homePageSlogane,
+          ),
           const _emptyWidget(),
           _SearchingTextField(
               detailCardBackgroundColor: detailCardBackgroundColor,
               homePageTextFieldLabel: homePageTextFieldLabel),
           const _emptyWidget(),
-          LargeText(text: homePageCatageri, size: 17),
+          SmallTitle(
+            text: homePageCatagory,
+          ),
           const _emptyWidget(),
           _categoryButtons(),
           const _emptyWidget(),
@@ -88,12 +94,12 @@ class _HomePageState extends State<HomePage>
   // ignore: non_constant_identifier_names
   Expanded _CategoryDetails(BuildContext context) {
     return Expanded(
-      child: SizedBox(
+      child: Container(
           width: MediaQuery.of(context).size.width,
           child: GridView(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, childAspectRatio: 0.7),
-              children: List.generate(25, (index) {
+              children: List.generate(10, (index) {
                 return GridViewCard(
                   onTab: () {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -131,41 +137,15 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  BottomNavigationBar _bottomNavigationBar() {
-    return BottomNavigationBar(
-        onTap: onTap,
-        elevation: 0,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        selectedFontSize: 0,
-        unselectedFontSize: 0,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        currentIndex: SelectedNavBar,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey.withOpacity(0.5),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.favorite), label: "Favourite"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_rounded), label: "Cart"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-        ]);
-  }
-
   BottomAppBar _bottomAppBar() {
     return BottomAppBar(
         elevation: 0,
-        color: Color.fromRGBO(232, 233, 239, 1),
+        color: favouiteBackroundColor,
         surfaceTintColor: Colors.black,
         child: TabBar(
           controller: tabController,
           tabs: const [
-            Tab(
-                child: Icon(
-              Icons.home_outlined,
-            )),
+            Tab(child: Icon(Icons.home_outlined)),
             Tab(icon: Icon(Icons.favorite_border_rounded)),
             Tab(icon: Icon(Icons.shopping_cart_outlined)),
             Tab(icon: Icon(Icons.person_2_outlined)),

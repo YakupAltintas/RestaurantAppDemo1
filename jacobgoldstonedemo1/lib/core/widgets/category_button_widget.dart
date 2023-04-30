@@ -15,13 +15,13 @@ class CategoryButton extends StatelessWidget {
   late void Function()? onTap;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5), color: backgroundColor),
-        height: 30,
+            
         padding: const EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,

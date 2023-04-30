@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jacobgoldstonedemo1/project_theme/project_colors.dart';
-import 'package:flutter/services.dart';
-import 'package:jacobgoldstonedemo1/widgets/core/large_text_widget.dart';
+import 'package:jacobgoldstonedemo1/core/widgets/medium_headline_text_widget.dart';
+import 'package:jacobgoldstonedemo1/core/project_theme/project_colors.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
@@ -26,9 +25,8 @@ class _DetailPageState extends State<DetailPage> with ProjectColors {
                 left: 0,
                 right: 0,
                 top: 0,
-                height: 300,
+                height: MediaQuery.of(context).size.height * (2 / 5),
                 child: Container(
-                  height: 300,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                       color: favouiteBackroundColor,
@@ -37,7 +35,7 @@ class _DetailPageState extends State<DetailPage> with ProjectColors {
                 ),
               ),
               Positioned(
-                  top: 280,
+                  top: MediaQuery.of(context).size.height * (2 / 5),
                   child: Container(
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -54,11 +52,8 @@ class _DetailPageState extends State<DetailPage> with ProjectColors {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              LargeText(text: "Tavuk Çorbası", size: 25),
-                              LargeText(
-                                text: "15₺",
-                                size: 25,
-                              )
+                              MediumText(text: "Tavuk Çorbası"),
+                              MediumText(text: "15₺")
                             ],
                           ),
                           _emptyWidget(10),
@@ -75,6 +70,7 @@ class _DetailPageState extends State<DetailPage> with ProjectColors {
 
   AppBar _appBar() {
     return AppBar(
+        
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
@@ -86,12 +82,12 @@ class _DetailPageState extends State<DetailPage> with ProjectColors {
           const SizedBox(width: 10),
         ],
         leading: Row(
-          children:  [
+          children: [
             const SizedBox(width: 5),
             IconButton(
               icon: Icon(Icons.arrow_back_sharp),
               color: Colors.black,
-              onPressed: (){
+              onPressed: () {
                 Navigator.of(context).pop();
               },
             ),

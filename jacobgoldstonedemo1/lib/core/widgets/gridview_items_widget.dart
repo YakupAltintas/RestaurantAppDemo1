@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jacobgoldstonedemo1/project_theme/project_colors.dart';
+import 'package:jacobgoldstonedemo1/core/project_theme/project_colors.dart';
 
 class GridViewCard extends StatefulWidget{
   GridViewCard({super.key,required this.onTab});
@@ -16,9 +16,9 @@ class _GridViewCardState extends State<GridViewCard> {
     return InkWell(
       onTap: widget.onTab,
       child: Container(
-        height: 250,
-        padding:const EdgeInsets.all(5),
-        margin: const EdgeInsets.symmetric(horizontal: 15),
+        height: double.maxFinite,
+        padding:const EdgeInsets.all(8),
+        margin: const EdgeInsets.symmetric(horizontal: 12),
         decoration: BoxDecoration(
             borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(10),
@@ -33,14 +33,15 @@ class _GridViewCardState extends State<GridViewCard> {
                   colors.homePageGreenColor,
                   colors.favouiteBackroundColor
                 ])),
-        child: Column(children: [
-         const SizedBox(height: 170,),
-          Row(
-            children: const [Text("Tavuk Çorbası"), SizedBox.shrink()],
-          ),
+        child: Column(
+          verticalDirection: VerticalDirection.up, //elemanları tersten dizdim
+          children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [Row(children: [Icon(Icons.star,color: colors.starColor),const Text("4.8")],),Row(children: const [Text("10₺")],)],
+          ),
+          Row(
+            children: const [Text("Tavuk Çorbası"), SizedBox.shrink()],
           ),
         ]),
       ),
